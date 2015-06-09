@@ -48,7 +48,7 @@ var init = function(){
                 showError(500);
             }
         }else{
-            window.location.href = '/?category=0&page=home.html';
+            window.location.href = '/?category=0&page=home.md';
         }
     }catch(e){
         showError(500);
