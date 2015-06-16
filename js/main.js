@@ -31,7 +31,10 @@ var init = function(){
             if(params.category && params.page){
                 $('.nav li').eq(parseInt(params.category, 10)).addClass('active');
                 $.get(params.page, function(md){
-                    var html = marked(md);
+                    var html = marked(md)
+                                .replace(/[ ]/g, '<input type="checkbox" class="task-item">')
+                                .replace(/[x]/g, '<input type="checkbox" checked="checked" class="task-item">');
+
                     $('#content').html(html);
                     $('table').each(function(){
                         $(this).addClass('table table-hover table-bordered');

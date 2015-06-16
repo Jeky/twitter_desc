@@ -1,3 +1,7 @@
 .katex-display{
     font-size: 20px;
 }
+
+.task-item{
+    margin-right: 5px;
+}
