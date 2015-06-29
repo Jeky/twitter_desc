@@ -74,7 +74,7 @@
         }
         dataset = scaled(dataset);
 
-        $.get('/static/names.txt', function(namesStr){
+        $.get('/static/words.txt', function(namesStr){
             var names = namesStr.split('\n');
 
             $.getScript('https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js', function(){
