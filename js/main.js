@@ -32,7 +32,7 @@ var init = function(){
                 $('.nav li').eq(parseInt(params.category, 10)).addClass('active');
                 $.get(params.page, function(content){
                     var html = content;
-                    if(params.page.endsWith('.md')){
+                    if(params.page.lastIndexOf('.md') == params.page.length - 3){
                         html = marked(content)
                                 .replace(/\[\s\]/g, '<input type="checkbox" class="task-item">')
                                 .replace(/\[x\]/g, '<input type="checkbox" checked="checked" class="task-item">');
