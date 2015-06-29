@@ -30,11 +30,13 @@ var init = function(){
             var params = paramToJson(url);
             if(params.category && params.page){
                 $('.nav li').eq(parseInt(params.category, 10)).addClass('active');
-                $.get(params.page, function(md){
-                    var html = marked(md)
+                $.get(params.page, function(content){
+                    var html = content;
+                    if(params.page.endsWith('.md')){
+                        html = marked(content)
                                 .replace(/\[\s\]/g, '<input type="checkbox" class="task-item">')
                                 .replace(/\[x\]/g, '<input type="checkbox" checked="checked" class="task-item">');
-
+                    }
                     $('#content').html(html);
                     $('table').each(function(){
                         $(this).addClass('table table-hover table-bordered');

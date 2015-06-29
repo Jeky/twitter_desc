@@ -27,25 +27,3 @@ To use supervised learning method to detecting spammers, we first need some labe
 * Tweets he posted are in dataset(2011)
 
 and finally 3,045 users are collected. This list can be downloaded [here](/static/suspended.txt).
-
-##Preparing Data for Classification
-Next step of this project is to classify spammers by training a model based on labeled data. The training data contains two part: one is spammer collection, another is non-spammer collection. Spammer collection was described in the previous part. For non-spammer collection, we random sampled some arbitrary users from the whole dataset which satisfy:
-
-* This user should be in dataset(2009) and dataset(2011)
-* The tweets he posted should be in dataset(2011)
-* This user should not be on suspended list
-
-and finally 3,034 users are collected.
-
-Then we converted these two collections into [ARFF file format](http://www.cs.waikato.ac.nz/ml/weka/arff.html), which can be imported by [Weka](http://www.cs.waikato.ac.nz/ml/weka/arff.html). Weka is one of the most popular open source machine learning toolkit in the world, which provides lots of functions such as classification, clustering and feature selection. The features we used here is:
-
-* fraction of tweets with URLs
-* fraction of followers per friends
-* number of retweet by others
-* number of friends
-* number of followers
-* average number of hashtags per tweet
-* number of increment of followers during these 2 years
-* number of increment of friends during these 2 years
-
-This ARFF file can be downloaded [here](/static/train.arff).

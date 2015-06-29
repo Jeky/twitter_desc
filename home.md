@@ -4,7 +4,11 @@ This is my thesis project - **Detecting Spammers on Twitter**. The goal of this 
 
 ##Updates
 
-* I have already merged dataset together ([see](/?category=1&page=data.md)) and now moving forward to classification part.
+* Doing Feature Selection and Visualization on this dataset.
+
+* ~~I have converted all the source code into Java version due to the speed of Python is too slow.~~
+
+* ~~I have already merged dataset together ([see](/?category=1&page=data.md)) and now moving forward to classification part.~~
 
 * ~~I am working on data description part now. Hoping this will be finished within this week.~~
 
@@ -13,9 +17,7 @@ Here are the documents that I wrote for this project.
 
 * [Related Works(unfinished)](/static/related works.pdf)
 
-* [Weekly Report(June 1st - June 7th)](/static/June 1 - 7.pdf)
-
-* [Weekly Report(June 8th - June 14th)](/static/June 8 - 14.pdf)
+* [Weekly Report](/static/weekly report.pdf)
 
 ##Code
 All the code of this project can be found at: [Graph Toolkit](https://github.com/Jeky/graph), [Twitter Analysis](https://github.com/Jeky/twitter).
