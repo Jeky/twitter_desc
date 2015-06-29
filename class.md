@@ -76,4 +76,4 @@ The experiment of Bigram feature selection is running...
 
 We tried to reveal the relationship between words. By using [t-SNE](http://lvdmaaten.github.io/tsne/), which can reduce the dimension of high dimension dataset, we can visualize our data.
 
-[Word Distance Figure](/?category=2&page=tsne.html) shows the word in 2D. In this figure you can find out the distance of words and some clusters of words directly.
+[Word Distance Figure](/tsne.html) shows the word in 2D. In this figure you can find out the distance of words and some clusters of words directly.
