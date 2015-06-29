@@ -1,83 +1,119 @@
-<div id="figure">
-    <h2>Word Distance Figure</h2>
-    <p>The red node represents the word in spam tweets. The blue node represents the word in ordinary tweets. We selected top 1,000 words of result of <a href="https://code.google.com/p/word2vec/">word2vec</a>.</p>
-    <p>You can find out the node represents which word by pointing to the node. If there are some nodes that are overlaying, they will be shown together.</p>
-    <p>The dataset that is used for plotting can be downloaded <a href="/static/all.tsne.txt">here</a> and the word list can be downloaded <a href="/static/words.txt">here</a></p>
-</div>
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Detecting Spammers on Twitter</title>
+    <meta charset="utf-8">
+    <meta author="jeky">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css">
+    <link rel="stylesheet" type="text/css" href="css/katex.min.css">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse">
+      <div class="container">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="/">Detecting Spammers on Twitter</a>
+        </div>
 
-<p id="text" style="position: absolute; z-index: 10; border: 1px solid black; background-color: white;"></param>
+        <div class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="/?category=0&page=home.md">Home</a></li>
+            <li><a href="/?category=1&page=data.md">Dataset</a></li>
+            <li><a href="/?category=2&page=class.md">Classification</a></li>
+            <li><a href="/?category=3&page=todos.md">Todos</a></li>
+            <li><a href="/?category=4&page=about.md">About</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
 
-<script type="text/javascript">
-(function(){
-    var W = 1000;
-    var H = 1000;
-    var LEN = 30;
-    var R = 3;
+    <div class="container" id="content">
+      <div id="figure">
+          <h2>Word Distance Figure</h2>
+          <p>The red node represents the word in spam tweets. The blue node represents the word in ordinary tweets. We selected top 1,000 words of result of <a href="https://code.google.com/p/word2vec/">word2vec</a>.</p>
+          <p>You can find out the node represents which word by pointing to the node. If there are some nodes that are overlaying, they will be shown together.</p>
+          <p>The dataset that is used for plotting can be downloaded <a href="/static/all.tsne.txt">here</a> and the word list can be downloaded <a href="/static/words.txt">here</a></p>
+      </div>
+      <p id="text" style="position: absolute; z-index: 10; border: 1px solid black; background-color: white;"></param>
+    </div>
 
-    var scaled = function(dataset){
-        var minX = dataset[0][0];
-        var minY = dataset[0][1];
-        var maxX = dataset[0][0];
-        var maxY = dataset[0][1];
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/katex.min.js"></script>
+    <script type="text/javascript" src="js/auto-render.min.js"></script>
+    <script type="text/javascript" src="js/marked.min.js"></script>
+    <script type="text/javascript" src="js/main.js"></script>
+    <script type="text/javascript" src="js/d3.min.js"></script>
+    <script type="text/javascript">
+    (function(){
+        var W = 1000;
+        var H = 1000;
+        var LEN = 30;
+        var R = 3;
 
-        for(var i = 0; i < dataset.length; i++){
-            var x = dataset[i][0];
-            var y = dataset[i][1];
-            if(x < minX){
-                minX = x;
+        var scaled = function(dataset){
+            var minX = dataset[0][0];
+            var minY = dataset[0][1];
+            var maxX = dataset[0][0];
+            var maxY = dataset[0][1];
+
+            for(var i = 0; i < dataset.length; i++){
+                var x = dataset[i][0];
+                var y = dataset[i][1];
+                if(x < minX){
+                    minX = x;
+                }
+                if(maxX < x){
+                    maxX = x;
+                }
+                if(y < minY){
+                    minY = y;
+                }
+                if(maxY < y){
+                    maxY = y;
+                }
             }
-            if(maxX < x){
-                maxX = x;
+
+            for(var i = 0; i < dataset.length; i++){
+                var x = dataset[i][0];
+                var y = dataset[i][1];
+                x = (x - minX) / (maxX - minX) * W + R;
+                y = (1 - (y - minY) / (maxY - minY)) * H + R;
+                dataset[i] = [x, y];
             }
-            if(y < minY){
-                minY = y;
+
+            return dataset;
+        };
+
+        var merged = function(dataset, names){
+            var mergedDataset = [];
+            for(var i = 0; i < dataset.length; i++){
+                mergedDataset.push([dataset[i][0], dataset[i][1], names[i]]);
             }
-            if(maxY < y){
-                maxY = y;
-            }
+            return mergedDataset;
         }
 
-        for(var i = 0; i < dataset.length; i++){
-            var x = dataset[i][0];
-            var y = dataset[i][1];
-            x = (x - minX) / (maxX - minX) * W + R;
-            y = (1 - (y - minY) / (maxY - minY)) * H + R;
-            dataset[i] = [x, y];
-        }
+        $('document').css({
+            '-webkit-touch-callout': 'none',
+            '-webkit-user-select': 'none',
+            '-khtml-user-select': 'none',
+            '-moz-user-select': 'none',
+            '-ms-user-select': 'none',
+            'user-select': 'none'
+        });
 
-        return dataset;
-    };
+        $.get('/static/all.tsne.txt', function(dataStr){
+            dataStr = dataStr.split('\n');
+            var dataset = []
+            for(var i = 0; i < dataStr.length - 1; i++){
+                var pairStr = dataStr[i].split('\t');
+                dataset.push([parseFloat(pairStr[0]), parseFloat(pairStr[1])]);
+            }
+            dataset = scaled(dataset);
 
-    var merged = function(dataset, names){
-        var mergedDataset = [];
-        for(var i = 0; i < dataset.length; i++){
-            mergedDataset.push([dataset[i][0], dataset[i][1], names[i]]);
-        }
-        return mergedDataset;
-    }
-
-    $('document').css({
-        '-webkit-touch-callout': 'none',
-        '-webkit-user-select': 'none',
-        '-khtml-user-select': 'none',
-        '-moz-user-select': 'none',
-        '-ms-user-select': 'none',
-        'user-select': 'none'
-    });
-
-    $.get('/static/all.tsne.txt', function(dataStr){
-        dataStr = dataStr.split('\n');
-        var dataset = []
-        for(var i = 0; i < dataStr.length - 1; i++){
-            var pairStr = dataStr[i].split('\t');
-            dataset.push([parseFloat(pairStr[0]), parseFloat(pairStr[1])]);
-        }
-        dataset = scaled(dataset);
-
-        $.get('/static/words.txt', function(namesStr){
-            var names = namesStr.split('\n');
-
-            $.getScript('https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js', function(){
+            $.get('/static/words.txt', function(namesStr){
+                var names = namesStr.split('\n');
                 dataset = merged(dataset, names);
                 var tip = $('#text');
                 var svg = d3.select("#figure")
@@ -128,6 +164,7 @@
                    });
             });
         });
-    });
-})();
-</script>
+    })();
+    </script>
+  </body>
+</html>
