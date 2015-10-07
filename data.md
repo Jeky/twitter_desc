@@ -30,19 +30,19 @@ Each subset is a large XML file that includes the collected tweets. The followin
     ...
 ```
 
-Each collection of tweets starts with a line indicate the date and time of crawling and the id of user who posted these tweets. In XML, the entry element contains the main content of each tweet, together with the other information of this tweet, such as published date and author. We used the text in first child element (title) of entry as the text of this tweet. This is done by regular expression. After extraction, the parsed tweet is:
+Each collection of tweets starts with a line indicates the date and time of crawling and the id of user who posted these tweets. In XML, the entry element contains the main content of each tweet, together with the other information of this tweet, such as published date and author. We used the text in first child element (title) of entry as the text of this tweet. This is done by regular expression. After extraction, the parsed tweet is:
 
 ```
 TonyMullins: Live Recording Session NOW! (Broadcasting live at http://ustre.am/Sw9)
 ```
 
-And each tweet will start with the username of the author which should be removed. So the final tweet is:
+And each tweet starts with the username of the author which should be removed. So the final tweet is:
 
 ```
 Live Recording Session NOW! (Broadcasting live at http://ustre.am/Sw9)
 ```
 
-We parsed bishop.txt and extract 30,359 users, in which there are 27,490 users whose tweets have been collected and 2,869 users who have not posted any tweets (or whose tweets have not been collected in this dataset). [bishop-tweets.tar.gz](static/data/bishop-tweets.tar.gz) is the compressed folder that contains all the extracted tweets. The tweets of a user are stored in a single file named by the user id. [bishop-ids.txt](static/data/bishop-ids.txt) contains all the users collected from bishop subset. The format of this file is:
+We parsed bishop.txt and extracted unique 30,359 users, in which there are 27,490 users whose tweets have been collected and 2,869 users who have not posted any tweets (or whose tweets have not been collected in this dataset). [bishop-tweets.tar.gz](static/data/bishop-tweets.tar.gz) is the compressed folder that contains all the extracted tweets. The tweets of a user are stored in a single file named by the user id. [bishop-ids.txt](static/data/bishop-ids.txt) contains all the users collected from bishop subset. The format of this file is:
 
 ```
 USER_ID \t USER_NAME \t TWEET_COUNT
@@ -64,7 +64,7 @@ Compared to [Dr Lu's result](http://jlu.myweb.cs.uwindsor.ca/suspended/), we fou
 * [overstockr1](static/data/overstockr1.txt)
 * [Lyssuhhhh209](static/data/Lyssuhhhh209.txt)
 
-We also compared the collected tweets from one user in both Dr Lu's result and our result. The following files are collected from Dr Lu's extraction result and our extraction result which contain the tweet from TonyMullins.
+We also compared the extraction results in both Dr Lu's result and our result. The following files are collected from Dr Lu's extraction result and our extraction result which contain the tweet from TonyMullins.
 
 * [Dr Lu's Result](static/data/TonyMullins.txt)
 * [Our Result](static/data/14939713.txt)
@@ -72,6 +72,8 @@ We also compared the collected tweets from one user in both Dr Lu's result and o
 The numbers of tweets in both files are the same (519). Dr Lu's result contains 3 more lines that contains other information.
 ```
 2   0   Twitter / TonyMullins
+3   0   Twitter / TonyMullins
+4   0   Twitter / TonyMullins
 ```
 
 The total number of tweets collected from bishop.txt is 10,576,815. Average number of tweets of each user is 385. [bishop-token-freq.tar.gz](static/data/bishop-token-freq.tar.gz) contains the frequency list of all the tokens from tweets files. The following is top 10 tokens in tweets:
