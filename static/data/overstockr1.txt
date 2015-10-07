@@ -1,0 +1,7 @@
+  <title>Twitter / overstockr1</title>
+  <link type="text/html" href="http://twitter.com/overstockr1" rel="alternate"/>
+  <subtitle>Twitter updates from Tommy Daniel / overstockr1.</subtitle>
+      <title>overstockr1: At home and board!</title>
+      <content type="html">overstockr1: At home and board!</content>
+      <id>tag:twitter.com,2007:http://twitter.com/overstockr1/statuses/2284711881</id>
+      <link type="text/html" href="http://twitter.com/overstockr1/statuses/2284711881" rel="alternate"/>

@@ -1,0 +1,7 @@
+  <title>Twitter / lruiz10</title>
+  <link type="text/html" href="http://twitter.com/lruiz10" rel="alternate"/>
+  <subtitle>Twitter updates from lilly / lruiz10.</subtitle>
+      <title>lruiz10: nothing</title>
+      <content type="html">lruiz10: nothing</content>
+      <id>tag:twitter.com,2007:http://twitter.com/lruiz10/statuses/2645085606</id>
+      <link type="text/html" href="http://twitter.com/lruiz10/statuses/2645085606" rel="alternate"/>
