@@ -95,6 +95,24 @@ The numbers of tweets in both files are the same (519). Dr Lu's result contains 
 4   0   Twitter / TonyMullins
 ```
 
+The following figures show the tweet distribution of 1) lu's result, 2) our result of bishop, 3) our result of all four subsets. [download eps file](static/data/tweet-dist.eps)
+
+<img src="static/data/tweet-dist.png" alt="Tweet Distribution" style="width:100%;">
+
+There is a vertical line on the right of each figure because of the limitation of crawling. Each crawling of tweets collection will get 200 tweets, and many users have 16 screen of tweets, which means if the number of tweets of a user is larger than 16 * 200, then in this dataset we will only get 3200 tweets from him. So we can see that the maximum of count of tweets is 3200. The count of tweets of each user can be downloaded here:
+
+* [lu's result](static/data/lu-bishop-tweet-count.txt)
+* [our result of bishop](static/data/bishop-tweet-count.txt)
+* [our result of all 4 subsets](static/data/spammer-tweet-count.txt)
+
+(Note: the number of users in lu's result is 14,616, which is smaller than the original lu's unique users list. This is because the user whose tweet set is empty have been removed.)
+
+We also compared the results of suspended users' tweet distribution with the normal users'. The following figure shows the tweet distribution of normal users ([download eps file](static/data/non-spammer-tweet-dist.eps)). The count of tweets of each user in normal user dataset can be downloaded here: [Count of Tweets of Normal User](static/data/non-spammer-tweet-count.txt).
+
+<div style="width:500px; margin: 0 auto">
+<img src="static/data/non-spammer-tweet-dist.png" alt="Normal User Tweet Distribution" style="width:500px">
+</div>
+
 The total number of tweets collected from bishop.txt is 10,576,815. Average number of tweets of each user is 385. [bishop-token-freq.tar.gz](static/data/bishop-token-freq.tar.gz) contains the frequency list of all the tokens from tweets files. The following is top 10 tokens in tweets:
 ```
 i       4086918
