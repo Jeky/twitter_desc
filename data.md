@@ -30,7 +30,26 @@ Each subset is a large XML file that includes the collected tweets. The followin
     ...
 ```
 
-Each collection of tweets starts with a line indicates the date and time of crawling and the id of user who posted these tweets. In XML, the entry element contains the main content of each tweet, together with the other information of this tweet, such as published date and author. We used the text in first child element (title) of entry as the text of this tweet. This is done by regular expression. After extraction, the parsed tweet is:
+Each collection of tweets starts with a line indicates the date and time of crawling and the id of user who posted these tweets. In XML, the entry element contains the main content of each tweet, together with the other information of this tweet, such as published date and author. We used the text in first child element (title) of entry as the text of this tweet. This is done by regular expression. 
+
+First use regular expression to find the line contains the date and user id.
+```Java
+public static final Pattern TWEET_COLLECTION_START = Pattern.compile("###.+### (\\d+)]");
+```
+And then use regular expression to find the entry element which means the beginning part of tweet.
+```Java
+public static final Pattern TWEET_START = Pattern.compile("\\s*<entry>\\s*");
+```
+After we find the start of entry element, we put all the lines after that element into a buffer till we find the close of entry element.
+```Java
+public static final Pattern TWEET_END = Pattern.compile("\\s*</entry>\\s*");
+```
+And we extract the content from buffer, which is defined as the text of the first child element of entry.
+```Java
+public static final Pattern CONTENT_MATCHER = Pattern.compile("\\s*<entry>\\s*<\\w+>(.+?)<.*>.+");
+```
+
+After extraction, the parsed tweet is:
 
 ```
 TonyMullins: Live Recording Session NOW! (Broadcasting live at http://ustre.am/Sw9)
