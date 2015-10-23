@@ -1,4 +1,0 @@
-      <id>tag:twitter.com,2007:http://twitter.com/myra_g/statuses/7145705949</id>
-      <link type="text/html" href="http://twitter.com/myra_g/statuses/7145705949" rel="alternate"/>
-### 20100331T200723 ### 45705949]
-  <link type="application/atom+xml" href="http://twitter.com/statuses/user_timeline.atom?user_id=45705949&amp;count=200&amp;page=1" rel="self"/>

@@ -1,2 +1,0 @@
-### 20100331T005915 ### 48465567]
-  <link type="application/atom+xml" href="http://twitter.com/statuses/user_timeline.atom?user_id=48465567&amp;count=200&amp;page=1" rel="self"/>

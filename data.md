@@ -1,5 +1,7 @@
 ##Overview
 
+### Suspended User Dataset
+
 The suspended user dataset is collected by Wenzhong Li et al, which contains about 120,000 users. There are 4 subsets of this dataset, [bishop](http://jlu.myweb.cs.uwindsor.ca/suspended/Tweets/bishop.txt.gz), [gambit](http://jlu.myweb.cs.uwindsor.ca/suspended/Tweets/gambit.txt.gz), [Havok](http://jlu.myweb.cs.uwindsor.ca/suspended/Tweets/Havok.txt.gz) and [Phoenix](http://jlu.myweb.cs.uwindsor.ca/suspended/Tweets/Phoenix.txt.gz).
 
 Each subset is a large XML file that includes the collected tweets. The following lines are extracted from bishop.txt. This example shows the structure of this XML file. 
@@ -22,13 +24,11 @@ for each line in file:
     use regular expression '\s*<entry>\s*<\w+>(.+?)<.*>.+' to extract content
 ```
 
-Download extraction script here: [extract_tweets.py](static/data/extract_tweets.py). Use this script you can extract all the tweets from subset files like this:
+Download extraction script here: [extract_sus_tweets.py](static/data/extract_sus_tweets.py). Use this script you can extract all the tweets from subset files like this:
 ```
-./extract_tweets.py bishop.txt
+./extract_sus_tweets.py bishop.txt
 ```
-This will generate a bishop.txt.extracted which contains all the tweet from the original file.
-
-After extraction, the parsed tweet is:
+This will generate a file named bishop.txt.extracted which contains all the tweets from the original file. After extraction, the parsed tweet is:
 
 ```
 TonyMullins: Live Recording Session NOW! (Broadcasting live at http://ustre.am/Sw9)
@@ -40,69 +40,122 @@ And each tweet starts with the username of the author which should be removed. S
 Live Recording Session NOW! (Broadcasting live at http://ustre.am/Sw9)
 ```
 
-We parsed bishop.txt and extracted unique 30,359 users, in which there are 27,490 users whose tweets have been collected and 2,869 users who have not posted any tweets (or whose tweets have not been collected in this dataset). [bishop-tweets.tar.gz](static/data/bishop-tweets.tar.gz) is the compressed folder that contains all the extracted tweets. The tweets of a user are stored in a single file named by the user id. [bishop-ids.txt](static/data/bishop-ids.txt) contains all the users collected from bishop subset. The format of this file is:
+We parsed all the 4 subsets and extracted 45,411,890 tweets and unique 124,568 users, in which there are 113,347 users whose tweets have been collected and 11,221 users who have not posted any tweets (or whose tweets have not been collected in this dataset). [suspended-users.txt](static/data/suspended-users.txt) contains all the collected users. The format of this file is:
 
 ```
 USER_ID \t USER_NAME \t TWEET_COUNT
 ```
 
-And if TWEET_COUNT is 0, then username will be empty. [bishop-users.txt](static/data/bishop-users.txt) contains all the users whose tweets have been collected. The format of this file is same as bishop-ids.txt. [bishop-empty.txt](static/data/bishop-empty.txt) contains all ids of users who have not posted any tweets. The following 5 files are collected from the original XML file (bishop.txt). Each file contains the related lines of the user in bishop-empty.txt.
+And if TWEET_COUNT is 0, then username will be empty. [suspended-ids.txt](static/data/suspended-ids.txt) contains all the users whose tweets have been collected. [empty-suspended-ids.txt](static/data/empty-suspended-ids.txt) contains all ids of users who have not posted any tweets. Every line in these two files contains one user id.
 
-* [37310042](static/data/37310042.txt)
-* [44939041](static/data/44939041.txt)
-* [45705949](static/data/45705949.txt)
-* [48465567](static/data/48465567.txt)
-* [56113727](static/data/56113727.txt)
+### Non-Suspended User Dataset
 
-Compared to [Dr Lu's result](http://jlu.myweb.cs.uwindsor.ca/suspended/), we found that 12,872 users are missing in [bishopFreqUsers.txt](http://jlu.myweb.cs.uwindsor.ca/suspended/bishopFreqUsers.txt). The following 5 files are collected from the original XML file (bishop.txt). Each file contains the related lines of a missing user.
+The non-suspended user dataset is collected by Rui Li et al in 2012. There are 3 parts of this dataset, [Network](http://forward.cs.illinois.edu/datasets/UDI/UDI-TwitterCrawl-Aug2012-Profiles.zip), [Profile](http://forward.cs.illinois.edu/datasets/UDI/UDI-TwitterCrawl-Aug2012-Profiles.zip) and [Tweets](http://forward.cs.illinois.edu/datasets/UDI/UDI-TwitterCrawl-Aug2012-Tweets.zip). We here focused on the tweets collection.
 
-* [emilymw8](static/data/emilymw8.txt)
-* [glamorous_baby](static/data/glamorous_baby.txt)
-* [lruiz10](static/data/lruiz10.txt)
-* [overstockr1](static/data/overstockr1.txt)
-* [Lyssuhhhh209](static/data/Lyssuhhhh209.txt)
+There are 147,909 files in the tweets collection. Each file contains at most 500 tweets published by a user (In our experiments, we found that the number of tweets in each file is much larger than 500). Thus, in total, there are tweets from 147909 users. The filenames consistent with the user ID. For a file [ID1], it contains tweets about the user ID1. Tweets in a file are stored as the following format.
 
-We also compared the extraction results in both Dr Lu's result and our result. The following files are collected from Dr Lu's extraction result and our extraction result which contain the tweet from TonyMullins.
+<p class="well">
+\*\*\*<br>
+Type: status<br>
+<strong style="color:red">Origin: [ORIGINAL CONTENT]</strong><br>
+Text: [PROCESSED CONTENT]<br>
+URL: [URL TWEET]<br>
+ID: [TWEET ID]<br>
+Time:[CREATION TIME ]<br>
+RetCount:[RETWEET COUNT]<br>
+Favorite: [FAVORITE]<br>
+MentionedEntities: [MENTIONED USER ID]<br>
+Hashtags: [HASHTAG]<br>
+\*\*\*<br>
+\*\*\*<br>
+...<br>
+\*\*\*<br>
+</p>
 
-* [Dr Lu's Result](static/data/TonyMullins.txt)
-* [Our Result](static/data/14939713.txt)
+There are many fields that contain the information of this tweet, and we used <strong style="color:red">Origin Field</strong> to extract the content of this tweet. This is also done by regular expression
 
-The numbers of tweets in both files are the same (519). Dr Lu's result contains 3 more lines that contains other information.
 ```
-2   0   Twitter / TonyMullins
-3   0   Twitter / TonyMullins
-4   0   Twitter / TonyMullins
-```
-
-The following figures show the tweet distribution of 1) lu's result, 2) our result of bishop, 3) our result of all four subsets. [download eps file](static/data/tweet-dist.eps)
-
-<img src="static/data/tweet-dist.png" alt="Tweet Distribution" style="width:100%;">
-
-There is a vertical line on the right of each figure because of the limitation of crawling. Each crawling of tweets collection will get 200 tweets, and many users have 16 screen of tweets, which means if the number of tweets of a user is larger than 16 * 200, then in this dataset we will only get 3200 tweets from him. So we can see that the maximum of count of tweets is 3200. The count of tweets of each user can be downloaded here:
-
-* [lu's result](static/data/lu-bishop-tweet-count.txt)
-* [our result of bishop](static/data/bishop-tweet-count.txt)
-* [our result of all 4 subsets](static/data/spammer-tweet-count.txt)
-
-(Note: the number of users in lu's result is 14,616, which is smaller than the original lu's unique users list. This is because the user whose tweet set is empty have been removed.)
-
-We also compared the results of suspended users' tweet distribution with the normal users'. The following figure shows the tweet distribution of normal users ([download eps file](static/data/non-spammer-tweet-dist.eps)). The count of tweets of each user in normal user dataset can be downloaded here: [Count of Tweets of Normal User](static/data/non-spammer-tweet-count.txt).
-
-<div style="width:500px; margin: 0 auto">
-<img src="static/data/non-spammer-tweet-dist.png" alt="Normal User Tweet Distribution" style="width:500px">
-</div>
-
-The total number of tweets collected from bishop.txt is 10,576,815. Average number of tweets of each user is 385. [bishop-token-freq.tar.gz](static/data/bishop-token-freq.tar.gz) contains the frequency list of all the tokens from tweets files. The following is top 10 tokens in tweets:
-```
-i       4086918
-the     2703627
-to      2478648
-a       2232051
-you     1702212
-and     1464853
-it      1414519
-my      1313907
-is      1287337
-quot    1159229
+content = get file content and replace newline(\n) with space
+find all tweets by 'Origin:(.*?)Text:' in content
 ```
 
+[extract_nor_tweets.py] is used to extract all the tweets from non-suspended user. You can use this script like this:
+
+```
+./extract_nor_tweets.py UNZIPPED_TWEETS_DIR
+```
+
+This will generate a directory named non-suspended-tweets which contains all the tweets from the original directory. Each file named by the id of users and each line in this file contains one tweet.
+
+We parsed this dataset and collected 147,909 users and 61,732,967 tweets. [non-suspended-ids.txt](static/data/non-suspended-ids.txt) contains all the ids of users. In this file, each line contains one id. There are 357 users that are in suspended user dataset so we need to remove them. [shared-user-ids.txt](static/data/shared-user-ids.txt)
+
+### Analysis of datasets
+
+We analyzed the tweets distribution and the token distribution of each dataset. The following figure shows the tweets distribution of 1) suspended users and 2) non-suspended users.
+
+<img src="static/data/tweet-count-dist.png" alt="" style="display:block; width:1100px; margin:0 auto">
+
+[Download eps file](static/data/tweet-count-dist.eps)
+
+There is a vertical line on the right of suspended users because of the limitation of crawling. Each crawling of tweets collection will get 200 tweets, and many users have 16 screen of tweets, which means if the number of tweets of a user is larger than 16 * 200, then in this dataset we will only get 3200 tweets from him. So we can see that the maximum of count of tweets is 3200. 
+
+Unlike the description on the website of non suspended dataset, we found that the number of tweets in each file is much larger than 500. In fact there are 26,746 users the number of whose tweets is more than 500. And the limitation number of crawling tweets is about 1,000. So we can figure out that there also are some vertical lines one the right indicating that there are many users the number of whose tweets i around 1,000. We provided an example user to prove that the number of tweets can be larger than 1,000, [Original Tweets File](static/data/100042133.original), [Extracted Tweets File](static/data/100042133).
+
+The count of tweets of each user can be downloaded here:
+
+* [suspended-tweets-count.txt](static/data/suspended-tweets-count.txt)
+* [non-suspended-tweets-count.txt](static/data/non-suspended-tweets-count.txt)
+
+We split the tweets into tokens by regular expression. The tokens can be:
+
+* word or number 
+* mention (@username)
+* hashtag (#some_tag)
+* url (http://t.co/abc)
+
+The following figure is the token distribution of 1) suspended users and 2) non suspended users.
+
+<img src="static/data/token-count-dist.png" alt="" style="display:block; width:1100px; margin:0 auto">
+
+[Download eps file](static/data/token-count-dist.eps)
+
+We can see there is no big difference between these two datasets and the figures are following power law as we expected. The following table shows top 10 words in both two datasets.
+
+| Order | Suspended User Token | Suspended User Token Count | Non-Suspended User Token | Non-Suspended User Token Count |
+|:-:|:-:|:-:|:-:|:-:|
+|1|i|17885843|the|23201709|
+|2|the|11862617|to|18428740|
+|3|to|10779230|i|14673906|
+|4|a|9606754|a|14438691|
+|5|you|7339272|rt|11401000|
+|6|and|6393430|you|10990669|
+|7|it|6158153|for|10622819|
+|8|my|5757008|in|9963998|
+|9|is|5594945|and|9872263|
+|10|in|4787718|of|9853931|
+
+Download the word frequency list:
+
+* [suspended-token-freq.tar.gz](static/data/suspended-token-freq.tar.gz)
+* [non-suspended-token-freq.tar.gz](static/data/non-suspended-token-freq.tar.gz)
+
+And we also analyzed the count of token in each tweets. The following figure shows the number of tokens in tweets.
+
+<img src="static/data/tweet-len-dist.png" alt="" style="display:block; width:1100px; margin:0 auto">
+
+[Download eps file](static/data/tweet-len-dist.eps)
+
+There are some tweets in which the number of tokens is larger than 40, which is impossible because each tweet should be less than 140 characters. These tweets are in fact combined with some encoded special characters and when tokenizing each special character will be a single token. We can add the code of these special characters to the stop list to remove these characters.
+
+The following table shows the statistic of both datasets.
+
+|   | Suspended User | Non-Suspended User |
+|:-:|:-:|:-:|
+|# User | 113,347 | 147,909 |
+|# Tweets| 45,411,890 | 61,732,967 |
+|Average Tweet Length | 12.34 | 14.10|
+|Average #Tweet per user | 400.64 | 417.37 |
+
+
+### Sampling datasets
+To train a classifier we need a balanced dataset, in which the numbers of suspended users and non-suspended users are same. And we also need the average number of tokens of both two datasets to be similar. The average number of tokens in suspended user dataset is 12.34 and the average number of tokens in non-suspended user dataset is 14.10. To balance this condition, we need to sample more tweets from suspended user dataset. 

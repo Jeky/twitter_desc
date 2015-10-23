@@ -30,6 +30,6 @@ def extract(fname):
 
 if __name__ == '__main__':
     if len(sys.argv) != 2:
-        print 'USAGE: ./extract_tweets.py TWEET_SUBSET_FILENAME'
+        print 'USAGE: ./extract_sus_tweets.py TWEET_SUBSET_FILENAME'
     else:
         extract(sys.argv[1])
