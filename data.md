@@ -147,14 +147,23 @@ And we also analyzed the count of token in each tweets. The following figure sho
 
 There are some tweets in which the number of tokens is larger than 40, which is impossible because each tweet should be less than 140 characters. These tweets are in fact combined with some encoded special characters and when tokenizing each special character will be a single token. We can add the code of these special characters to the stop list to remove these characters.
 
+URL, mention(retweet) and hashtag are 3 important properties of tweets. We computed the average URL containing probability, average retweet probability and average hashtag containing probability of each user and plotted in the following figure.
+
+<img src="static/data/tweet-prop-dist.png" alt="" style="display:block; width:1100px; margin:0 auto">
+
+[Download eps file](static/data/tweet-prop-dist.eps)
+
 The following table shows the statistic of both datasets.
 
 |   | Suspended User | Non-Suspended User |
 |:-:|:-:|:-:|
 |# User | 113,347 | 147,909 |
 |# Tweets| 45,411,890 | 61,732,967 |
-|Average Tweet Length | 12.34 | 14.10|
-|Average #Tweet per user | 400.64 | 417.37 |
+|Average tweet Length | 12.34 | 14.10|
+|Average # tweet per user | 400.64 | 417.37 |
+|Average URL containing of all users| 13.89% | 43.52% |
+|Average retweeting of all users | 46.08% | 48.22% |
+|Average hashtag containing of all users | 8.08% | 20.70% |
 
 
 ### Sampling datasets
